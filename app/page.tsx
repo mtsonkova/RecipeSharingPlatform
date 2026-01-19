@@ -35,37 +35,48 @@ export default async function Home() {
   return (
     <div className="flex flex-col items-center gap-12">
       <section className="flex w-full flex-col items-center gap-6 rounded-2xl bg-white px-6 py-16 text-center shadow-sm">
-        <h1 className="text-4xl font-bold leading-tight text-black sm:text-5xl">
-          Share Your Culinary
-          <br />
-          Masterpieces
-        </h1>
-        <p className="max-w-2xl text-lg text-zinc-600">
-          Join our community of food lovers. Share recipes, discover new dishes,
-          and connect with fellow cooking enthusiasts.
-        </p>
         {isAuthenticated ? (
-          <Link
-            href="/recipes/new"
-            className="mt-2 rounded-md bg-black px-6 py-3 text-sm font-semibold text-white transition hover:bg-black/90"
-          >
-            Start Sharing
-          </Link>
+          <>
+            <h1 className="text-4xl font-bold leading-tight text-black sm:text-5xl">
+              Dashboard
+            </h1>
+            <p className="max-w-2xl text-lg text-zinc-600">
+              Welcome back! Explore featured recipes, share your creations, and
+              discover new culinary inspiration.
+            </p>
+            <Link
+              href="/recipes/new"
+              className="mt-2 rounded-md bg-black px-6 py-3 text-sm font-semibold text-white transition hover:bg-black/90"
+            >
+              Start Sharing
+            </Link>
+          </>
         ) : (
-          <div className="mt-2 flex items-center gap-3">
-            <Link
-              href="/login"
-              className="rounded-md bg-black px-6 py-3 text-sm font-semibold text-white transition hover:bg-black/90"
-            >
-              Log in
-            </Link>
-            <Link
-              href="/signup"
-              className="rounded-md border border-black/20 px-6 py-3 text-sm font-semibold text-black transition hover:bg-black/5"
-            >
-              Sign up
-            </Link>
-          </div>
+          <>
+            <h1 className="text-4xl font-bold leading-tight text-black sm:text-5xl">
+              Share Your Culinary
+              <br />
+              Masterpieces
+            </h1>
+            <p className="max-w-2xl text-lg text-zinc-600">
+              Join our community of food lovers. Share recipes, discover new dishes,
+              and connect with fellow cooking enthusiasts.
+            </p>
+            <div className="mt-2 flex items-center gap-3">
+              <Link
+                href="/login"
+                className="rounded-md bg-black px-6 py-3 text-sm font-semibold text-white transition hover:bg-black/90"
+              >
+                Log in
+              </Link>
+              <Link
+                href="/signup"
+                className="rounded-md border border-black/20 px-6 py-3 text-sm font-semibold text-black transition hover:bg-black/5"
+              >
+                Sign up
+              </Link>
+            </div>
+          </>
         )}
       </section>
 
