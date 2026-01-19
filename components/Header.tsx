@@ -5,17 +5,23 @@ import { AuthButtons } from "./AuthButtons";
 type NavItem = {
   href: string;
   label: string;
+  requiresAuth?: boolean;
 };
 
 const NAV_ITEMS: readonly NavItem[] = [
   { href: "/", label: "Home" },
   { href: "/recipes", label: "Explore" },
-  { href: "/recipes/new", label: "Upload" },
-  { href: "/profile", label: "Profile" },
+  { href: "/recipes/new", label: "Upload", requiresAuth: true },
+  { href: "/profile", label: "Profile", requiresAuth: true },
 ] as const;
 
 export async function Header() {
   const profile = await getCurrentUserProfile();
+  const isAuthenticated = profile !== null;
+
+  const visibleNavItems = NAV_ITEMS.filter(
+    (item) => !item.requiresAuth || isAuthenticated
+  );
 
   return (
     <header className="border-b border-black/10 bg-background">
@@ -30,7 +36,7 @@ export async function Header() {
         </Link>
 
         <nav className="hidden items-center gap-1 sm:flex" aria-label="Primary">
-          {NAV_ITEMS.map((item) => (
+          {visibleNavItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -48,7 +54,7 @@ export async function Header() {
         className="mx-auto flex w-full max-w-5xl items-center gap-1 overflow-x-auto px-2 pb-3 sm:hidden"
         aria-label="Primary"
       >
-        {NAV_ITEMS.map((item) => (
+        {visibleNavItems.map((item) => (
           <Link
             key={item.href}
             href={item.href}

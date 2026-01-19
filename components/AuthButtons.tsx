@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signOut } from "@/app/actions/auth";
 
@@ -9,11 +8,8 @@ type AuthButtonsProps = {
 };
 
 export function AuthButtons({ username }: AuthButtonsProps) {
-  const router = useRouter();
-
   async function handleSignOut() {
     await signOut();
-    router.refresh();
   }
 
   if (username) {

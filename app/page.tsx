@@ -1,3 +1,6 @@
+import { getCurrentUser } from "@/lib/auth/utils";
+import Link from "next/link";
+
 type RecipeCard = {
   id: string;
   title: string;
@@ -25,7 +28,10 @@ const featuredRecipes: readonly RecipeCard[] = [
   },
 ] as const;
 
-export default function Home() {
+export default async function Home() {
+  const user = await getCurrentUser();
+  const isAuthenticated = user !== null;
+
   return (
     <div className="flex flex-col items-center gap-12">
       <section className="flex w-full flex-col items-center gap-6 rounded-2xl bg-white px-6 py-16 text-center shadow-sm">
@@ -38,37 +44,56 @@ export default function Home() {
           Join our community of food lovers. Share recipes, discover new dishes,
           and connect with fellow cooking enthusiasts.
         </p>
-        <a
-          href="/recipes/new"
-          className="mt-2 rounded-md bg-black px-6 py-3 text-sm font-semibold text-white transition hover:bg-black/90"
-        >
-          Start Sharing
-        </a>
+        {isAuthenticated ? (
+          <Link
+            href="/recipes/new"
+            className="mt-2 rounded-md bg-black px-6 py-3 text-sm font-semibold text-white transition hover:bg-black/90"
+          >
+            Start Sharing
+          </Link>
+        ) : (
+          <div className="mt-2 flex items-center gap-3">
+            <Link
+              href="/login"
+              className="rounded-md bg-black px-6 py-3 text-sm font-semibold text-white transition hover:bg-black/90"
+            >
+              Log in
+            </Link>
+            <Link
+              href="/signup"
+              className="rounded-md border border-black/20 px-6 py-3 text-sm font-semibold text-black transition hover:bg-black/5"
+            >
+              Sign up
+            </Link>
+          </div>
+        )}
       </section>
 
-      <section className="w-full">
-        <h2 className="mb-6 text-center text-2xl font-semibold text-black">
-          Featured Recipes
-        </h2>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {featuredRecipes.map((recipe) => (
-            <article
-              key={recipe.id}
-              className="flex h-full flex-col overflow-hidden rounded-2xl border border-black/10 bg-white shadow-sm"
-            >
-              <div className="h-44 w-full bg-gradient-to-br from-zinc-200 to-zinc-300" />
-              <div className="flex flex-1 flex-col gap-2 px-4 py-4">
-                <h3 className="text-sm font-semibold text-black">
-                  {recipe.title}
-                </h3>
-                <p className="text-sm leading-relaxed text-zinc-600">
-                  {recipe.description}
-                </p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
+      {isAuthenticated && (
+        <section className="w-full">
+          <h2 className="mb-6 text-center text-2xl font-semibold text-black">
+            Featured Recipes
+          </h2>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {featuredRecipes.map((recipe) => (
+              <article
+                key={recipe.id}
+                className="flex h-full flex-col overflow-hidden rounded-2xl border border-black/10 bg-white shadow-sm"
+              >
+                <div className="h-44 w-full bg-gradient-to-br from-zinc-200 to-zinc-300" />
+                <div className="flex flex-1 flex-col gap-2 px-4 py-4">
+                  <h3 className="text-sm font-semibold text-black">
+                    {recipe.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-zinc-600">
+                    {recipe.description}
+                  </p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }
