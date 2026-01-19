@@ -1,5 +1,3 @@
-import { SupabaseConnectionTest } from "@/components/SupabaseConnectionTest";
-
 type RecipeCard = {
   id: string;
   title: string;
@@ -47,8 +45,6 @@ export default function Home() {
           Start Sharing
         </a>
       </section>
-
-      <SupabaseConnectionTest />
 
       <section className="w-full">
         <h2 className="mb-6 text-center text-2xl font-semibold text-black">
