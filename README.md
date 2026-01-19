@@ -1,8 +1,69 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Supabase Setup
+
+This project uses [Supabase](https://supabase.com) for authentication and database.
+
+### 1. Environment Variables
+
+Copy `.env.example` to `.env.local` and fill in your Supabase credentials:
+
+```bash
+cp .env.example .env.local
+```
+
+Get your Supabase credentials from your project settings:
+- `NEXT_PUBLIC_SUPABASE_URL`: Your Supabase project URL
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Your Supabase anonymous/public key
+- `SUPABASE_SERVICE_ROLE_KEY`: Your Supabase service role key (server-side only)
+
+### 2. Database Migration
+
+Run the migration to create the necessary tables:
+
+```bash
+# If using Supabase CLI
+supabase db push
+
+# Or apply the migration manually through Supabase Dashboard
+# Go to SQL Editor and run: supabase/migrations/001_create_profiles_and_recipes.sql
+```
+
+### 3. Supabase Clients
+
+The project includes three Supabase client utilities:
+
+- **Browser Client** (`lib/supabase/client.ts`): Use in Client Components
+- **Server Client** (`lib/supabase/server.ts`): Use in Server Components, Server Actions, and Route Handlers
+- **Admin Client** (`lib/supabase/admin.ts`): Use for server-side operations that bypass RLS (use sparingly)
+
+Example usage:
+
+```typescript
+// In a Client Component
+import { createClient } from "@/lib/supabase/client";
+const supabase = createClient();
+
+// In a Server Component or Server Action
+import { createClient } from "@/lib/supabase/server";
+const supabase = await createClient();
+
+// Get authenticated user (redirects if not authenticated)
+import { getAuthenticatedUser } from "@/lib/supabase/utils";
+const user = await getAuthenticatedUser();
+```
+
 ## Getting Started
 
-First, run the development server:
+First, install dependencies:
+
+```bash
+npm install
+```
+
+Then, set up your `.env.local` file with Supabase credentials (see Supabase Setup above).
+
+Finally, run the development server:
 
 ```bash
 npm run dev
