@@ -1,0 +1,116 @@
+# .cursorrules
+
+## Project Overview
+
+* Framework: Next.js (App Router)
+* Language: TypeScript (strict mode)
+* Backend: Next.js Route Handlers (`app/api`) and Server Actions
+* Database & Auth: Supabase
+
+These rules must be followed for all AI-generated code in this repository.
+
+---
+
+## General Rules
+
+* Use **TypeScript only** (no JavaScript files)
+* Prefer **explicit types** over `any` or implicit inference for public APIs
+* Do not introduce new libraries or services without asking first
+* Match existing project structure and conventions
+* Keep functions small and focused (≈40 lines max when possible)
+* Favor readability over cleverness
+
+---
+
+## Next.js Rules
+
+* Use the **App Router** (`app/` directory)
+* Prefer **Server Components by default**
+* Only use Client Components when required (`"use client"`)
+* Use **Server Actions** for mutations when appropriate
+* Do not use `getServerSideProps` or `getStaticProps`
+* Prefer `next/navigation` over legacy routing APIs
+
+---
+
+## React Rules
+
+* Use **function components only**
+* No class components
+* Avoid unnecessary state; derive values when possible
+* Use React hooks correctly and follow the Rules of Hooks
+* Do not use inline styles; use CSS modules or Tailwind (if configured)
+
+---
+
+## Supabase Rules
+
+* Use **Supabase Auth** for authentication (no custom auth logic)
+* Always use the **official Supabase client**
+* Never expose **service role keys** to the client
+* Separate **browser**, **server**, and **admin** Supabase clients
+* Centralize Supabase client creation (no ad-hoc instantiation)
+* Prefer `createServerClient` with cookies for server-side usage
+* Enforce authorization using **Row Level Security (RLS)**
+* Do not bypass RLS in application code
+* Never trust client-side session data for authorization
+
+---
+
+## Data & API Rules
+
+* Validate all external inputs (forms, params, request bodies)
+* Prefer server-side data fetching
+* Handle loading, error, and empty states explicitly
+* Never trust client-provided user IDs; derive from auth context
+
+---
+
+## Error Handling
+
+* Handle expected errors gracefully
+* Avoid silent failures
+* Use typed error responses where possible
+* Log server errors clearly (no console spam)
+
+---
+
+## Code Style
+
+* Prefer named exports
+* Avoid default exports
+* Use early returns to reduce nesting
+* Use async/await (no raw promises)
+* Write comments only when logic is non-obvious
+
+---
+
+## Forbidden
+
+* Using `any`
+* Disabling TypeScript or ESLint rules without justification
+* Hardcoding secrets or environment values
+* Client-side access to privileged Supabase APIs
+
+---
+
+## Request Analysis & Planning (Mandatory)
+
+Before writing code, the AI must:
+
+* Restate the request in its own words
+* Identify assumptions and constraints
+* Ask clarifying questions if anything is ambiguous
+* Propose a high-level solution or architecture
+* Only write code after the plan is agreed or clearly implied
+
+For non-trivial changes:
+
+* Break the solution into steps
+* Explain why key decisions were made
+
+---
+
+## When Unsure
+
+If requirements are ambiguous or a decision impacts architecture, **ask before implementing**.
