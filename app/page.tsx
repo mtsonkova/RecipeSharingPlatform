@@ -1,65 +1,74 @@
-import Image from "next/image";
+type RecipeCard = {
+  id: string;
+  title: string;
+  description: string;
+};
+
+const featuredRecipes: readonly RecipeCard[] = [
+  {
+    id: "1",
+    title: "Delicious Recipe 1",
+    description:
+      "A wonderful description of this amazing recipe that will make your mouth water.",
+  },
+  {
+    id: "2",
+    title: "Delicious Recipe 2",
+    description:
+      "A wonderful description of this amazing recipe that will make your mouth water.",
+  },
+  {
+    id: "3",
+    title: "Delicious Recipe 3",
+    description:
+      "A wonderful description of this amazing recipe that will make your mouth water.",
+  },
+] as const;
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="flex flex-col items-center gap-12">
+      <section className="flex w-full flex-col items-center gap-6 rounded-2xl bg-white px-6 py-16 text-center shadow-sm">
+        <h1 className="text-4xl font-bold leading-tight text-black sm:text-5xl">
+          Share Your Culinary
+          <br />
+          Masterpieces
+        </h1>
+        <p className="max-w-2xl text-lg text-zinc-600">
+          Join our community of food lovers. Share recipes, discover new dishes,
+          and connect with fellow cooking enthusiasts.
+        </p>
+        <a
+          href="/recipes/new"
+          className="mt-2 rounded-md bg-black px-6 py-3 text-sm font-semibold text-white transition hover:bg-black/90"
+        >
+          Start Sharing
+        </a>
+      </section>
+
+      <section className="w-full">
+        <h2 className="mb-6 text-center text-2xl font-semibold text-black">
+          Featured Recipes
+        </h2>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {featuredRecipes.map((recipe) => (
+            <article
+              key={recipe.id}
+              className="flex h-full flex-col overflow-hidden rounded-2xl border border-black/10 bg-white shadow-sm"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              <div className="h-44 w-full bg-gradient-to-br from-zinc-200 to-zinc-300" />
+              <div className="flex flex-1 flex-col gap-2 px-4 py-4">
+                <h3 className="text-sm font-semibold text-black">
+                  {recipe.title}
+                </h3>
+                <p className="text-sm leading-relaxed text-zinc-600">
+                  {recipe.description}
+                </p>
+              </div>
+            </article>
+          ))}
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </section>
     </div>
   );
 }
