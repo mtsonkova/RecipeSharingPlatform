@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { getCurrentUserProfile } from "@/lib/auth/utils";
+import { AuthButtons } from "./AuthButtons";
 
 type NavItem = {
   href: string;
@@ -12,7 +14,9 @@ const NAV_ITEMS: readonly NavItem[] = [
   { href: "/profile", label: "Profile" },
 ] as const;
 
-export function Header() {
+export async function Header() {
+  const profile = await getCurrentUserProfile();
+
   return (
     <header className="border-b border-black/10 bg-background">
       <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-6 px-4 py-4 sm:px-6">
@@ -37,20 +41,7 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
-          <Link
-            href="/login"
-            className="rounded-md px-3 py-2 text-sm text-black/70 hover:bg-black/5 hover:text-black"
-          >
-            Log in
-          </Link>
-          <Link
-            href="/signup"
-            className="rounded-md bg-black px-3 py-2 text-sm font-medium text-white hover:bg-black/90"
-          >
-            Sign up
-          </Link>
-        </div>
+        <AuthButtons username={profile?.username ?? null} />
       </div>
 
       <nav
